@@ -1,6 +1,57 @@
 
 var canvas;
 
+
+
+function getWacomPlugin()
+{
+    return document.getElementById('wtPlugin');
+}
+
+function isPluginLoaded()
+{
+    var retVersion = "";
+    var pluginVersion = getWacomPlugin().version;
+    //alert("pluginVersion: [" + pluginVersion + "]");
+
+    if ( pluginVersion != undefined )
+    {
+        retVersion = pluginVersion;
+    }
+
+    return retVersion;
+}
+
 $(window).ready(function() {
-    canvas = DrawingCanvas($("canvas"));
+    externalSvgModel.loadResources(function(){
+
+        canvas = DrawingCanvas($("canvas"));
+
+        var toolbarContainer = d3.select("#toolbar-container"),
+            configurationsContainer = d3.select("#configuration-bar-container");
+
+        var canvasModeToolbar = CanvasModeToolbar();
+        canvasModeToolbar.view.appendTo(toolbarContainer);
+
+        var configurationsToolbar = ConfigurationsToolbar();
+        configurationsToolbar.view.appendTo(configurationsContainer);
+
+
+
+    });
+
+
+
+    var loadVersion = isPluginLoaded();
+    //alert("loadVersion: [" + loadVersion + "]");
+
+    if ( loadVersion != "" )
+    {
+        console.log("Loaded webplugin: " + loadVersion);
+    }
+    else
+    {
+        alert("wacom webplugin is NOT Loaded (or undiscoverable). You can still use just the mouse");
+
+    }
 });

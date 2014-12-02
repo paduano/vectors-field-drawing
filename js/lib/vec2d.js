@@ -8,9 +8,17 @@
 function vec2(x_,y_){
     return new Vec2(x_,y_);
 }
-
+/*
 function vec2(v){
     return new Vec2(v.x, v.y);
+}
+*/
+function vec2distance(v1, v2) {
+    return v1.subV(v2).length();
+}
+
+function vec2distanceSqr(v1, v2) {
+    return v1.subV(v2).lengthSqr();
 }
 
 function Vec2(x_,y_)

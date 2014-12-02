@@ -6,13 +6,13 @@ var Field = function() {
     self.computeForce = function(dropPosition, dropMass){
         var resultForce = vec2(0,0);
         for(var i = 0; i < self.forces.length; i++){
-            resultForce.addV(resultForce.computeForce(dropPosition, dropMass));
+            resultForce = resultForce.addV(self.forces[i].computeForce(dropPosition, dropMass));
         }
         return resultForce;
     };
 
     self.addForce = function(force) {
-        self.forces.append(force);
+        self.forces.push(force);
     };
 
     var init = function () {
@@ -20,4 +20,11 @@ var Field = function() {
     }();
 
     return self;
+};
+
+var ForceType = {
+    DIRECTIONAL_FORCE : "DIRECTIONAL_FORCE",
+    ATTRACTOR : "ATTRACTOR",
+    REPULSOR : "REPULSOR"
+
 };

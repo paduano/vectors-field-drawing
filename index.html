@@ -4,20 +4,67 @@
     <meta charset="UTF-8">
     <title>Vectors Field Drawing</title>
 
+    <!-- Styles -->
+    <link rel="stylesheet" href="stylesheets/theme.css"/>
+
+
     <!-- External libraries -->
     <script src="js/lib/d3.js"></script>
     <script src="js/lib/jquery-2.1.1.js"></script>
     <script src="js/lib/underscore.js"></script>
     <script src="js/lib/queue.js"></script>
     <script src="js/lib/vec2d.js"></script>
+    <script src="js/lib/color.js"></script>
 
-    <!-- App Scripts -->
-    <script src="js/drawing/DrawingCanvas.js"></script>
+    <!-- Notifications-->
+    <script src="js/notification/notificationCenter.js"></script>
+    <script src="js/notification/notifications.js"></script>
+
+
+    <!-- MODEL -->
+
+    <script src="js/model/resource/externalSvgModel.js"></script>
+    <script src="js/model/CanvasModeModel.js"></script>
+    <script src="js/model/LayersModel.js"></script>
+    <script src="js/model/color/ColorModel.js"></script>
+
+
+    <!-- VIEW CONTROLLER -->
+
+    <script src="js/viewController/viewController.js"></script>
+    <script src="js/viewController/externalSvgViewController.js"></script>
+    <script src="js/viewController/mainViewController.js"></script>
+
+    <script src="js/viewController/view/UISvgView.js"></script>
+    <script src="js/viewController/view/UIGView.js"></script>
+    <script src="js/viewController/view/UIDivView.js"></script>
+    <script src="js/viewController/view/UIView.js"></script>
+    <script src="js/viewController/view/UIImageView.js"></script>
+    <script src="js/viewController/view/UIBackgroundView.js"></script>
+
+    <script src="js/viewController/components/buttonViewController.js"></script>
+    <script src="js/viewController/components/checkboxViewController.js"></script>
+
+    <script src="js/viewController/interface/CanvasModeToolbar.js"></script>
+    <script src="js/viewController/interface/ConfigurationsToolbar.js"></script>
+
+    <!-- -->
+    <script src="js/wacom/wacom.js"></script>
+
     <script src="js/drawing/canvas-mode/DirectionalForceCanvasMode.js"></script>
+    <script src="js/drawing/canvas-mode/PaintCanvasMode.js"></script>
+    <script src="js/drawing/canvas-mode/AttractorRepulsionCanvasMode.js"></script>
+    <script src="js/drawing/DrawingCanvas.js"></script>
+
 
     <script src="js/field/DirectionalForce.js"></script>
+    <script src="js/field/Attractor.js"></script>
     <script src="js/field/Field.js"></script>
     <script src="js/field/InkDrop.js"></script>
+
+
+
+
 
 
     <!-- startup -->
@@ -25,14 +72,35 @@
 
 </head>
 <body>
-    <div id="canvas-container">
-        <canvas id="drawing-canvas">
 
-        </canvas>
+    <div>
+        <div id="canvas-container" style="float:left">
+            <canvas id="drawing-canvas">
+
+            </canvas>
+        </div>
+
+        <div id="configuration-bar-container">
+
+        </div>
+    </div>
+
+    <div id="toolbar-container" style="clear:left">
 
     </div>
 
+    <!--[if IE]>
 
+    <object id='wtPlugin' classid='CLSID:092dfa86-5807-5a94-bf3b-5a53ba9e5308'>
+    </object>
+
+    <![endif]--><!--[if !IE]> <-->
+
+    <object id="wtPlugin" type="application/x-wacomtabletplugin">
+
+    </object>
+
+    <!--> <![endif]-->
 
 </body>
 </html>

@@ -1,16 +1,17 @@
-var DirectionalForce = function(position, direction) {
+var DirectionalForce = function(position, direction, intensity) {
 
     var self = {};
+    self.forceType = ForceType.DIRECTIONAL_FORCE;
+    self.position = position;
+    self.direction = direction;
+    self.intensity = intensity;
 
-    var _position = position,
-        _direction = direction;
-
-    var computeForce = function(dropPosition, dropMass){
-        var distanceTo2 = dropPosition.lengthSqr(_position);
-        if (distanceTo2 < 1.0) {
-           distanceTo2 = 1.0
+    self.computeForce = function(dropPosition, dropMass){
+        var distanceTo2 = vec2distanceSqr(dropPosition, self.position);
+        if (distanceTo2 < Math.pow(self.intensity, 2)) {
+           distanceTo2 = Math.pow(self.intensity, 2);
         }
-        return _direction.mulS(dropMass/distanceTo2);
+        return self.direction.mulS(/*dropMass*/self.intensity/distanceTo2);
     };
 
     return self;
