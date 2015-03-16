@@ -10,7 +10,8 @@ var Wacom = function() {
     };
 
     self.getPressure = function(){
-        var pressure = getPlugin().penAPI.pressure;
+        var api = getPlugin().penAPI;
+        var pressure = api? api.pressure : 0.5;
         if(pressure){
             return pressure;
         } else  {

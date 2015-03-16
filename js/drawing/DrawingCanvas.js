@@ -102,7 +102,10 @@ var DrawingCanvas = function(canvasElement) {
 
     var drawDirectionalForce = function(force) {
         var tipAngle = 0.6,
-            tipLength = 5;
+            tipLength = 5,
+            strokeWidth = 2.0;
+
+        ctx.lineWidth = strokeWidth;
 
 
         var destination = force.position.addV(force.direction.mulS(force.intensity));
@@ -115,16 +118,28 @@ var DrawingCanvas = function(canvasElement) {
         var points = [destination.subV(tipSub1),
                       destination,
                       destination.subV(tipSub2)];
+
         drawSegmentedLine(points);
     };
 
 
     var drawAttractor = function(force) {
         var radius = Math.abs(force.intensity),
-            strokeWidth = 1.0;
+            strokeWidth = 2.0;
         ctx.beginPath();
         ctx.arc(force.position.x, force.position.y, radius, 0, 2 * Math.PI, false);
         ctx.lineWidth = strokeWidth;
+        ctx.strokeStyle = '#770000';
+        ctx.stroke();
+    };
+
+    var drawRepulsor = function(force) {
+        var radius = Math.abs(force.intensity),
+            strokeWidth = 2.0;
+        ctx.beginPath();
+        ctx.arc(force.position.x, force.position.y, radius, 0, 2 * Math.PI, false);
+        ctx.lineWidth = strokeWidth;
+        ctx.strokeStyle = '#000077';
         ctx.stroke();
     };
 
@@ -148,6 +163,7 @@ var DrawingCanvas = function(canvasElement) {
             for(var i = 1; i < points.length; i++){
                 ctx.lineTo(points[i].x, points[i].y);
             }
+            ctx.strokeStyle = '#000000';
             ctx.stroke();
         }
     };
@@ -158,7 +174,7 @@ var DrawingCanvas = function(canvasElement) {
         var currentColor = Color([currentColorRGB[0], currentColorRGB[1], currentColorRGB[2]]);
 
         if(currentColor.toCSS() != '#000000'){
-            drop.color = drop.color.blend(currentColor, 0.5);
+            drop.color = drop.color.blend(currentColor, 0.1);
         }
 
     };
@@ -175,6 +191,9 @@ var DrawingCanvas = function(canvasElement) {
         paintBufferCtx.stroke();
     };
 
+    self.clearDrawing = function () {
+        paintBufferCtx.clearRect ( 0 , 0 , 1000,1000 );
+    };
 
     var drawFieldSymbols = function(){
         //directional forces
@@ -188,7 +207,7 @@ var DrawingCanvas = function(canvasElement) {
                     drawAttractor(force);
                     break;
                 case(ForceType.REPULSOR):
-                    drawAttractor(force);
+                    drawRepulsor(force);
                     break;
             }
 
@@ -233,7 +252,10 @@ var DrawingCanvas = function(canvasElement) {
                 var previousPosition = drop.position;
                 drop.integrate(self.field,dt);
                 var nextPosition = drop.position;
-                //mixDropColor(drop);
+
+                //blend
+//                mixDropColor(drop);
+
                 drawDropStroke(drop, previousPosition, nextPosition);
             } else {
                 deadDrops.push(drop);

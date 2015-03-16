@@ -51,7 +51,8 @@ $(window).ready(function() {
     }
     else
     {
-        alert("wacom webplugin is NOT Loaded (or undiscoverable). You can still use just the mouse");
+        alert("wacom webplugin is NOT Loaded (or undiscoverable). Please enable it." +
+        "\n If you haven't a Wacom tablet you can still use just the mouse");
 
     }
 });

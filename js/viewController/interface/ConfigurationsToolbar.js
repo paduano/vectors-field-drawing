@@ -1,5 +1,5 @@
 var ConfigurationsToolbar = function(){
-    var self = SvgViewController();
+    var self = DivViewController();
 
     var _visibleFieldCheckbox;
     var _colorPaletteGroup,
@@ -17,10 +17,43 @@ var ConfigurationsToolbar = function(){
     };
 
     var init = function(){
-        self.view.height = 400;
+        self.view.height = 800;
+
+        var topDiv = UIDivView();
+        self.view.append(topDiv);
+
+        //top
+
+
+        //Life
+        var lifelabel = $("<label>").text('Drop Life:');
+        var lifeinput = $('<input type="text">').attr({id: 'drop-life-form'}).val(configurationModel.dropLife);
+        lifeinput.appendTo(lifelabel);
+        $(topDiv[0]).append(lifelabel);
+
+        lifeinput.on('input', function () {
+            configurationModel.dropLife = parseFloat($(this).val());
+        });
+
+        //viscosity
+        var viscosityLabel = $("<label>").text('Viscosity:');
+        var viscosityInput = $('<input type="text">').attr({id: 'drop-life-form'}).val(configurationModel.dropViscosity);
+        viscosityInput.appendTo(viscosityLabel);
+        $(topDiv[0]).append($('</br>'));
+        $(topDiv[0]).append(viscosityLabel);
+
+        viscosityInput.on('input', function () {
+            configurationModel.dropViscosity = parseFloat($(this).val());
+        });
+
+        //bottom
+        var bottomSvgViewController = SvgViewController();
+        bottomSvgViewController.view.height = 600;
+        self.view.append(bottomSvgViewController);
+
 
         _visibleFieldCheckbox = CheckboxViewController();
-        self.view.append(_visibleFieldCheckbox);
+        bottomSvgViewController.view.append(_visibleFieldCheckbox);
         _visibleFieldCheckbox.view.width = 120;
         _visibleFieldCheckbox.view.height = 20;
         _visibleFieldCheckbox.view.x = 10;
@@ -40,7 +73,7 @@ var ConfigurationsToolbar = function(){
 
 
         //COLOR PALETTE
-        _colorPaletteGroup = UIGView(self.view.append('g'));
+        _colorPaletteGroup = UIGView(bottomSvgViewController.view.append('g'));
         _colorPaletteGroup.attr('transform','translate(0,70)');
         for(var i = 0; i < Colors.palette.length; i++){
             var color = Colors.palette[i];

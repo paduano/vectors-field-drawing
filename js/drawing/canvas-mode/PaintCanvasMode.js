@@ -1,9 +1,8 @@
 var PaintCanvasMode = function(canvas) {
     var self = {};
 
-    var INKDROP_MASS = 10,
-        INKDROP_LIFE = 2000;
-        INKDROP_SIZE = 3;
+    var INKDROP_MASS = 3,
+        INKDROP_SIZE = 6;
 
     /** Canvas inputs **/
     self.onMouseDown = function(pos) {
@@ -14,7 +13,9 @@ var PaintCanvasMode = function(canvas) {
     self.onDragging = function(startPos, currentPos) {
         //console.log("dragging from" + startPos.toArray() + " to " + currentPos.toArray());
         var pressure = wacom.getPressure();
-        var inkDrop = InkDrop(currentPos, INKDROP_MASS, INKDROP_LIFE * pressure , INKDROP_SIZE * pressure, colorModel.currentColor);
+        var inkDrop = InkDrop(currentPos, INKDROP_MASS, (configurationModel.dropLife * pressure) * pressure, //start life
+            configurationModel.dropLife * pressure , //max life
+            INKDROP_SIZE * pressure, colorModel.currentColor);
         canvas.inkDrops.push(inkDrop);
     };
 
